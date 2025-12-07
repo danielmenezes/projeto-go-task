@@ -1,8 +1,18 @@
-<form class="rounded-xl overflow-hidden bg-white">
+<form
+  class="rounded-xl overflow-hidden bg-white"
+  [formGroup]="taskForm"
+  (ngSubmit)="onFormSubmit()"
+>
   <div class="flex gap-1 items-center p-4">
     <img src="images/icon-new-task.svg" />
-    <h1 class="font-semibold text-lg">Criar/Editar tarefa</h1>
-    <img class="ml-auto cursor-pointer" src="images/icon-close.svg" />
+    <h1 class="font-semibold text-lg">
+      {{ _data.mode === "create" ? "Criar " : "Editar " }} tarefa
+    </h1>
+    <img
+      class="ml-auto cursor-pointer"
+      src="images/icon-close.svg"
+      (click)="closeModal()"
+    />
   </div>
   <div class="p-4 border-y border-[#D1D5DB] flex flex-col gap-4">
     <div>
@@ -10,6 +20,7 @@
       <input
         class="w-full border border-[#D1D5DB] p-3 rounded-lg text-sm font-light text-[#89919F]"
         type="text"
+        formControlName="name"
         placeholder="Descreva o que deverá ser feito"
       />
       <p class="font-semibold text-sm text-red-500">
@@ -21,6 +32,7 @@
       <input
         class="w-full border border-[#D1D5DB] p-3 rounded-lg text-sm font-light text-[#89919F]"
         type="text"
+        formControlName="description"
         placeholder="Adicione uma descrição"
       />
       <p class="font-semibold text-sm text-red-500">
@@ -31,14 +43,18 @@
       <button
         class="py-2 px-4 bg-[#FAFAFA] rounded-xl text-sm font-semibold cursor-pointer active:translate-1 transition-transform duration-75"
         type="button"
+        (click)="closeModal()"
       >
         Cancelar
       </button>
       <button
-        class="py-2 px-4 bg-[#2A89EF] text-white rounded-xl text-sm font-semibold cursor-pointer active:translate-1 transition-transform duration-75 shadow-md shadow-blue-500/50"
+        class="{{ `py-2 px-4 rounded-xl text-sm font-semibold cursor-pointer ${
+          taskForm.invalid ? 'bg-[#D7D8D8]' : 'bg-[#2A89EF] text-white active:translate-1 transition-transform duration-75 shadow-md shadow-blue-500/50'
+        }` }}"
         type="submit"
+        [disabled]="taskForm.invalid"
       >
-        Criar uma tarefa
+        {{ _data.mode === "create" ? "Criar uma tarefa" : "Salvar alterações" }}
       </button>
     </div>
   </div>

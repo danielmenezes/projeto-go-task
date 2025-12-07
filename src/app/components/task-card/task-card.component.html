@@ -1,13 +1,13 @@
 <div class="rounded-xl cursor-grab flex flex-col gap-3">
   <div class="flex gap-1">
-    <p class="font-bold">Minha nova tarefa</p>
+    <p class="font-bold">{{ task.name }}</p>
     <img
       class="self-start cursor-pointer ml-auto"
       src="images/icon-delete.svg"
     />
   </div>
   <p class="font-light text-sm">
-    Essa é minha tarefa para criar uma aplicação Angular
+    {{ task.description }}
   </p>
   <div class="flex items-center gap-1">
     <img src="images/icon-comments.svg" />
@@ -18,6 +18,7 @@
     </p>
     <p
       class="font-semibold text-xs text-[#2A89EF] underline underline-offset-2 cursor-pointer ml-auto"
+      (click)="openEditTaskModal()"
     >
       Editar
     </p>
