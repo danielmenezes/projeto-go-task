@@ -2,18 +2,20 @@
 @let doingTasks = (_taskService.doingTasks | async) ?? [];
 @let doneTasks = (_taskService.doneTasks | async) ?? [];
 
-<div class="flex overflow-x-auto scrollbar-hidden">
+<div class="flex">
   <!-- Coluna A Fazer -->
   <div class="flex-1 py-3 px-6 min-w-60 flex flex-col gap-6">
     <div class="py-2 border-b border-[#D1D5DB] flex items-center gap-1">
       <h1 class="font-bold">A fazer</h1>
-      <span class="text-xs font-semibold text-white bg-black py-1 px-2 rounded-xl">
+      <span
+        class="text-xs font-semibold text-white bg-black py-1 px-2 rounded-xl"
+      >
         {{ todoTasks.length }}
       </span>
     </div>
 
     <div
-      class="flex flex-col gap-4"
+      class="flex flex-col gap-4 min-h-[120px]"
       id="to-do-column"
       cdkDropList
       #todoListCdkDropList="cdkDropList"
@@ -22,7 +24,7 @@
       (cdkDropListDropped)="onCardDrop($event)"
     >
       @for (todoTask of todoTasks; track todoTask.id) {
-         <app-task-card [task]="todoTask" cdkDrag/>
+        <app-task-card [task]="todoTask" cdkDrag />
       }
     </div>
   </div>
@@ -31,13 +33,15 @@
   <div class="flex-1 py-3 px-6 min-w-60 flex flex-col gap-6">
     <div class="py-2 border-b border-[#D1D5DB] flex items-center gap-1">
       <h1 class="font-bold">Fazendo</h1>
-      <span class="text-xs font-semibold text-white bg-[#FF850A] py-1 px-2 rounded-xl">
+      <span
+        class="text-xs font-semibold text-white bg-[#FF850A] py-1 px-2 rounded-xl"
+      >
         {{ doingTasks.length }}
       </span>
     </div>
 
     <div
-      class="flex flex-col gap-4"
+      class="flex flex-col gap-4 min-h-[120px]"
       id="doing-column"
       cdkDropList
       #doingListCdkDropList="cdkDropList"
@@ -46,7 +50,7 @@
       (cdkDropListDropped)="onCardDrop($event)"
     >
       @for (doingTask of doingTasks; track doingTask.id) {
-        <app-task-card [task]="doingTask" cdkDrag/>
+        <app-task-card [task]="doingTask" cdkDrag />
       }
     </div>
   </div>
@@ -55,13 +59,15 @@
   <div class="flex-1 py-3 px-6 min-w-60 flex flex-col gap-6">
     <div class="py-2 border-b border-[#D1D5DB] flex items-center gap-1">
       <h1 class="font-bold">Concluído</h1>
-      <span class="text-xs font-semibold text-white bg-[#15BE78] py-1 px-2 rounded-xl">
+      <span
+        class="text-xs font-semibold text-white bg-[#15BE78] py-1 px-2 rounded-xl"
+      >
         {{ doneTasks.length }}
       </span>
     </div>
 
     <div
-      class="flex flex-col gap-4"
+      class="flex flex-col gap-4 min-h-[120px]"
       id="done-column"
       cdkDropList
       #doneListCdkDropList="cdkDropList"
@@ -70,14 +76,14 @@
       (cdkDropListDropped)="onCardDrop($event)"
     >
       @for (doneTask of doneTasks; track doneTask.id) {
-        <app-task-card [task]="doneTask" cdkDrag/>
+        <app-task-card [task]="doneTask" cdkDrag />
       }
     </div>
   </div>
 </div>
 
 @if (!todoTasks.length && !doingTasks.length && !doneTasks.length) {
-  <div class="bg-[#FAFAFA] rounded-sm py-3 px-5 border-l-4 border-black">
+  <div class="bg-[#FAFAFA] rounded-sm py-3 px-5 border-l-4 border-black mt-4">
     <p class="font-semibold text-lg text-[#9CA3AF]">
       Nenhuma tarefa disponível no momento.
     </p>

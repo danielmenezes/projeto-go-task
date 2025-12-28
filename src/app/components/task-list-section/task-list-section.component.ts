@@ -24,10 +24,9 @@ export class TaskListSectionComponent {
 
   onCardDrop(event: CdkDragDrop<ITask[]>) {
     this.moveCardToColumn(event);
-    console.log(event);
 
-    const taskId = event.container.data[0].id;
-    const taskCurrentStatus = event.container.data[0].status;
+    const taskId = event.container.data[event.currentIndex].id;
+    const taskCurrentStatus = event.container.data[event.currentIndex].status;
     const droppedColumn = event.container.id;
 
     this.updateTaskStatus(taskId, taskCurrentStatus, droppedColumn);
