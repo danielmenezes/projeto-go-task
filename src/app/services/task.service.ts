@@ -36,6 +36,20 @@ export class TaskService {
     this.todoTasks$.next([...currentTasks, newTask]);
   }
 
+  updateTask(
+    taskId: string,
+    taskForm: ITaskFormModalControls,
+    status: TaskStatus,
+  ) {
+    const currentTasks = this.getTaskListByStatus(status).getValue();
+
+    const updatedTasks = currentTasks.map((task) =>
+      task.id === taskId ? { ...task, ...taskForm } : task,
+    );
+
+    this.getTaskListByStatus(status).next(updatedTasks);
+  }
+
   updateTaskStatus(
     taskId: string,
     taskCurrentStatus: TaskStatus,

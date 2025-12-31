@@ -15,20 +15,24 @@ export class TaskCardComponent {
 
   @Input() task: ITask = {} as ITask;
 
+  ngOnInit() {
+    console.log(this.task);
+  }
+
   openEditTaskModal() {
     const dialogRef = this._modalControllerService.openTaskModal({
       data: {
         mode: 'edit',
         formValues: {
-          name: 'Nome teste',
-          description: 'Descrição teste',
+          name: this.task.name,
+          description: this.task.description,
         },
       },
     });
 
     dialogRef.closed.subscribe((taskForm) => {
       if (taskForm) {
-        this._taskService.addTask(taskForm);
+        this._taskService.updateTask(this.task.id, taskForm, this.task.status);
       }
     });
   }

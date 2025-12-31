@@ -1,6 +1,8 @@
 @let todoTasks = (_taskService.todoTasks | async) ?? [];
 @let doingTasks = (_taskService.doingTasks | async) ?? [];
 @let doneTasks = (_taskService.doneTasks | async) ?? [];
+@let notTasksAvailable =
+  todoTasks.length === 0 && doingTasks.length === 0 && doneTasks.length === 0;
 
 <div class="flex">
   <!-- Coluna A Fazer -->
@@ -82,7 +84,7 @@
   </div>
 </div>
 
-@if (!todoTasks.length && !doingTasks.length && !doneTasks.length) {
+@if (notTasksAvailable) {
   <div class="bg-[#FAFAFA] rounded-sm py-3 px-5 border-l-4 border-black mt-4">
     <p class="font-semibold text-lg text-[#9CA3AF]">
       Nenhuma tarefa disponível no momento.
