@@ -1,3 +1,6 @@
+import { IComment } from './comment.interface';
+
 export interface ITaskCommentsModalData {
-  mode: 'create' | 'edit';
+  taskId: string;
+  comments: IComment[];
 }

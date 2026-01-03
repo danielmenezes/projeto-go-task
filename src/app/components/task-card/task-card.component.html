@@ -5,6 +5,7 @@
       class="self-start cursor-pointer ml-auto"
       src="images/icon-delete.svg"
       draggable="false"
+      (click)="removeTask(task.id, task.status)"
     />
   </div>
   <p class="font-light text-sm">
@@ -14,8 +15,9 @@
     <img src="images/icon-comments.svg" draggable="false" />
     <p
       class="font-semibold text-xs text-[#2A89EF] underline underline-offset-2 cursor-pointer"
+      (click)="openCommentsModal(task)"
     >
-      2 Comentários
+      {{ task.comments?.length || 0 }} Comentários
     </p>
     <p
       class="font-semibold text-xs text-[#2A89EF] underline underline-offset-2 cursor-pointer ml-auto"

@@ -5,6 +5,7 @@ import { ITaskFormModalControls } from '../interfaces/task-form.modal.controls.i
 import { generateUniqueIdWithTimestamp } from '../utils/generate-unique-id-with-tomestamp';
 import { TaskStatusEnum } from '../enums/task-status.enum';
 import { TaskStatus } from '../types/task-status';
+import { IComment } from '../interfaces/comment.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -29,6 +30,7 @@ export class TaskService {
     const newTask: ITask = {
       id: generateUniqueIdWithTimestamp(),
       status: TaskStatusEnum.TODO,
+      comments: [],
       ...taskInfos,
     };
     const currentTasks = this.todoTasks$.getValue();
@@ -50,6 +52,18 @@ export class TaskService {
     this.getTaskListByStatus(status).next(updatedTasks);
   }
 
+  updateTaskComments(
+    taskId: string,
+    taskStatus: TaskStatus,
+    comments: IComment[],
+  ) {
+    const currentTasks = this.getTaskListByStatus(taskStatus).getValue();
+    const updatedTasks = currentTasks.map((task) =>
+      task.id === taskId ? { ...task, comments } : task,
+    );
+    this.getTaskListByStatus(taskStatus).next(updatedTasks);
+  }
+
   updateTaskStatus(
     taskId: string,
     taskCurrentStatus: TaskStatus,
@@ -69,6 +83,15 @@ export class TaskService {
       currentTasksList.next([...currentTaskWithoutTask]);
       nextTaskList.next([...nextTaskList.value, { ...currentTask }]);
     }
+  }
+
+  removeTask(taskId: string, taskStatus: TaskStatus) {
+    const currentTasksList = this.getTaskListByStatus(taskStatus);
+    const updatedTasks = currentTasksList
+      .getValue()
+      .filter((task) => task.id !== taskId);
+
+    currentTasksList.next(updatedTasks);
   }
 
   private getTaskListByStatus(taskStatus: TaskStatus) {

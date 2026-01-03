@@ -2,7 +2,11 @@
   <div class="p-4 flex gap-1">
     <img src="images/icon-task-star.svg" />
     <h1 class="font-semibold text-lg">Comentar tarefa</h1>
-    <img class="ml-auto cursor-pointer" src="images/icon-close.svg" />
+    <img
+      class="ml-auto cursor-pointer"
+      src="images/icon-close.svg"
+      (click)="onCloseModal()"
+    />
   </div>
   <div class="p-4 border-t border-[#D1D5DB]">
     <h1 class="font-semibold text-lg mb-4">Minha nova tarefa</h1>
@@ -22,13 +26,16 @@
             class="rounded-lg border border-[#D1D5DB] p-3 bg-white flex-1 text-sm font-light"
             type="text"
             placeholder="Adicione um comentário"
+            [formControl]="commentControl"
           />
-          <p class="font-semibold text-sm text-red-500">
-            O campo é obrigatório.
-          </p>
         </div>
         <button
-          class="py-3 px-4 bg-[#2A89EF] text-white rounded-xl text-sm font-semibold cursor-pointer active:translate-1 transition-transform duration-75 shadow-md shadow-blue-500/50"
+          class="{{ `py-3 px-4 rounded-xl text-white  text-sm font-semibold cursor-pointer
+          ${ commentControl.invalid 
+            ? 'bg-[#D7D8D8]' 
+            : 'bg-[#2A89EF] active:translate-y-1 transition-transform duration-75 shadow-md shadow-blue-500/50'}` }}"
+          [disabled]="commentControl.invalid"
+          (click)="addComment()"
         >
           Adicionar
         </button>
@@ -36,54 +43,30 @@
       <div
         class="flex flex-col gap-5 overflow-scroll max-h-44 scrollbar-hidden"
       >
-        <!-- Comentário -->
-        <div class="flex flex-col gap-3 border-b border-[#D1D5Db]">
-          <div>
-            <p class="font-light text-sm text-[#374151]">Já finalizei!</p>
+        @for (comment of _task.comments; track comment.id; let last = $last) {
+          <!-- Comentário -->
+          <div
+            class="{{ `flex flex-col gap-3 ${last ? '' : 'border-b border-[#E5E7EB] pb-3'}` }}"
+          >
+            <div>
+              <p class="font-light text-sm text-[#374151]">
+                {{ comment.description }}
+              </p>
+            </div>
+            <div class="{{ `flex gap-4 ${last ? '' : 'mb-3'}` }}">
+              <p class="font-normal text-sm text-[#9CA3AF]">
+                Comentado há 10 min atrás
+              </p>
+              <p
+                class="font-semibold text-sx underline underline-offset-2 cursor-pointer"
+                (click)="deleteComment(comment.id)"
+              >
+                Apagar
+              </p>
+            </div>
           </div>
-          <div class="flex gap-4 mb-3">
-            <p class="font-normal text-sm text-[#9CA3AF]">
-              Comentado há 10 min atrás
-            </p>
-            <p
-              class="font-semibold text-sx underline underline-offset-2 cursor-pointer"
-            >
-              Apagar
-            </p>
-          </div>
-        </div>
-        <!-- Comentário -->
-        <div class="flex flex-col gap-3 border-b border-[#D1D5Db]">
-          <div>
-            <p class="font-light text-sm text-[#374151]">Já finalizei!</p>
-          </div>
-          <div class="flex gap-4 mb-3">
-            <p class="font-normal text-sm text-[#9CA3AF]">
-              Comentado há 10 min atrás
-            </p>
-            <p
-              class="font-semibold text-sx underline underline-offset-2 cursor-pointer"
-            >
-              Apagar
-            </p>
-          </div>
-        </div>
-        <!-- Comentário -->
-        <div class="flex flex-col gap-3">
-          <div>
-            <p class="font-light text-sm text-[#374151]">Já finalizei!</p>
-          </div>
-          <div class="flex gap-4 mb-3">
-            <p class="font-normal text-sm text-[#9CA3AF]">
-              Comentado há 10 min atrás
-            </p>
-            <p
-              class="font-semibold text-sx underline underline-offset-2 cursor-pointer"
-            >
-              Apagar
-            </p>
-          </div>
-        </div>
+          <!-- Fim comentário -->
+        }
       </div>
     </div>
   </div>
