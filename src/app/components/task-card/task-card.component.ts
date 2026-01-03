@@ -3,10 +3,11 @@ import { ModalControllerService } from '../../services/modal-controller.service'
 import { TaskService } from '../../services/task.service';
 import { ITask } from '../../interfaces/task.interface';
 import { TaskStatus } from '../../types/task-status';
+import { SlicePipe } from '@angular/common';
 
 @Component({
   selector: 'app-task-card',
-  imports: [],
+  imports: [SlicePipe],
   templateUrl: './task-card.component.html',
   styleUrl: './task-card.component.css',
 })

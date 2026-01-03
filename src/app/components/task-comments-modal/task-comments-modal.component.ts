@@ -1,5 +1,5 @@
 import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
-import { Component, inject } from '@angular/core';
+import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { generateUniqueIdWithTimestamp } from '../../utils/generate-unique-id-with-tomestamp';
 import { IComment } from '../../interfaces/comment.interface';
@@ -11,6 +11,7 @@ import { IComment } from '../../interfaces/comment.interface';
   styleUrl: './task-comments-modal.component.css',
 })
 export class TaskCommentsModalComponent {
+  @ViewChild('commentInput') commentInput!: ElementRef<HTMLInputElement>;
   taskCommentsChanged = false;
   readonly _task = inject(DIALOG_DATA);
   readonly _dialogRef: DialogRef<boolean> = inject(DialogRef);
@@ -27,6 +28,9 @@ export class TaskCommentsModalComponent {
       this._task.comments.unshift(newComment);
       this.commentControl.reset();
       this.taskCommentsChanged = true;
+
+      // Focus back on the input after adding a comment
+      this.commentInput.nativeElement.focus();
     }
   }
 
